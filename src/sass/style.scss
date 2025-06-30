@@ -1,7 +1,121 @@
-@use "./abstracts/abstracts";
+@use "./abstracts/abstracts" as ab;
 @use "./vendors/vendors";
 @use "./base/base";
 @use "./components/components";
 @use "./layout/layout";
 @use "./pages/pages";
 @use "./themes/themes";
+
+html {
+    background-color: #035278;
+    background: linear-gradient(135deg, ab.$color-primary, ab.$color-secondary);
+    height: 100%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.construction-page {
+    text-align: center;
+    padding: 2rem;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        transition: color 0.5s ease;
+    }
+
+    h2 {
+        font-weight: normal;
+        margin-bottom: 1.5rem;
+    }
+
+    p.enlace {
+        margin: 20px 0px;
+    }
+
+    a {
+        color: #ffd166;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.card {
+    --border-size: 1.5rem;
+    --bg-color: #035278;
+    position: relative;
+    background-color: var(--bg-color);
+    width: 300px;
+    height: 180px;
+    margin: 2rem;
+    border-radius: var(--border-size);
+    color: white;
+    display: grid;
+    place-content: center;
+    padding: 1rem;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.card:hover h1 {
+    color: #ffd166;
+}
+
+.card::before, .card::after {
+  content: "";
+  position: absolute;
+}
+
+.card::before {
+    width: 210%;
+    height: 210%;
+    background-image: conic-gradient(
+        #ffd166 0deg,
+        transparent 60deg,
+        transparent 180deg,
+        #ffd166 180deg,
+        transparent 240deg);
+    inset: -50%;
+    z-index: -2;
+    animation: border 3s linear infinite;
+}
+
+.card:hover::before {
+  animation-play-state: paused;
+}
+
+@keyframes border {
+  to {
+    transform: rotateZ(-360deg);
+  }
+}
+
+.card::after {
+  --inset: 0.25rem;
+  background-color: ab.$color-secondary;
+  inset: var(--inset);
+  border-radius: calc(var(--border-size) - var(--inset));
+  z-index: -1;
+  transition: all 0.35s linear;
+}
+
+.card:hover::after {
+  background-color: var(--bg-color);
+}
